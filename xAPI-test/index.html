@@ -1,0 +1,57 @@
+<!doctype html>  
+<head>  
+ 
+    <!-- username and password encryption (not needed for the test)
+        from github.com/adlnet/xAPIWrapper -->
+    <script type="text/javascript" src="cryptojs_v3.1.2.js"></script>
+
+    <!-- "xAPI magic" from github.com/adlnet/xAPIWrapper -->
+    <script type="text/javascript" src="xapiwrapper.min.js"></script>
+      
+    <script>  
+    function send_statement(){  
+        var conf = {
+            
+            //xAPI endpoint for the LRS
+            //for the test its the local address of my HelloWorld Learning Locker
+            "endpoint" : "http://10.211.55.9/data/xAPI/",  
+            
+            // (Key:Secret) of the Master API client to my store
+            // In Learning Locker: 1. Go to setting; 2. create a store; 3. create a client; 4. copy key and secret
+            "auth" : "Basic " + toBase64("84dcdb85fab72855a657f9d01d8693f8863a1cca:0b6db4cb0af72ec89c2a4571deb08f85e14255af")
+        };  
+  
+        ADL.XAPIWrapper.changeConfig(conf);  
+           
+        //define the xapi statement being sent  
+        var statement = {  
+            "actor": {  
+                "mbox": "mailto:hello@world.com",  
+                "name": "Somebody",  
+                "objectType": "Agent"  
+            },  
+            "verb": {  
+                "id": "http://example.com/xapi/interacted",  
+                "display": {"en-US": "pressed"}  
+            },  
+            "object": {  
+                "id": "http://example.com/button_example",  
+                "definition": {  
+                    "name": {"en-US": "the Button"},  
+                    "description": {"en-US": "Example xAPI Button"}  
+                },  
+                "objectType": "Activity"  
+            }  
+        }; //end statement definition  
+   
+        // Dispatch the statement to the LRS  
+        var result = ADL.XAPIWrapper.sendStatement(statement);  
+        }  
+    </script>  
+  
+</head>  
+  
+<body>  
+    <button type="button" onclick="send_statement()">Send xAPI Statements</button>  
+</body>
+</html>
