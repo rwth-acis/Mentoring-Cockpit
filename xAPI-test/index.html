@@ -6,7 +6,7 @@
     <script type="text/javascript" src="cryptojs_v3.1.2.js"></script>
 
     <!-- "xAPI magic" from github.com/adlnet/xAPIWrapper -->
-    <script type="text/javascript" src="xapiwrapper.min.js"></script>
+    <script type="text/javascript" src="xapiwrapper.js"></script>
       
     <script>  
     function send_statement(){  
@@ -14,11 +14,11 @@
             
             //xAPI endpoint for the LRS
             //for the test its the local address of my HelloWorld Learning Locker
-            "endpoint" : "http://10.211.55.9/data/xAPI/",  
+            "endpoint" : "http://137.226.232.175:32654/data/xAPI/",  
             
-            // (Key:Secret) of the Master API client to my store
+            // (Key:Secret) of the API client for the store
             // In Learning Locker: 1. Go to setting; 2. create a store; 3. create a client; 4. copy key and secret
-            "auth" : "Basic " + toBase64("84dcdb85fab72855a657f9d01d8693f8863a1cca:0b6db4cb0af72ec89c2a4571deb08f85e14255af")
+            "auth" : "Basic " + toBase64("6f6b29e72cbe124252cb47a0c011706b7638a960:73f0c24ba43e2484931bcf9606e9638caebac963")
         };  
   
         ADL.XAPIWrapper.changeConfig(conf);  
