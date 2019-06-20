@@ -78,16 +78,48 @@ public class MoodleWebServiceConnector {
 	}
 	
 	/**
-	 * @param courseId This is the Id of the respective course for the assignment.
-	 * @param assignmentNumber This is the number of the assignment in this course.
-	 * @return Returns the assignment information (grades, date, userid, timecreated, etc.) 
+	 * @param courseId This is Id of the course you want to have enrolled users of
+	 * @return Returns enrolled users for specified course 
 	 */
-	public static String mod_assign_get_grades(int courseId, int assignmentNumber) throws ProtocolException, IOException {
-		
-		String urlParameters = "assignmentids[" + assignmentNumber + "]=" + URLEncoder.encode(Integer.toString(courseId), "UTF-8");
-		String result = restRequest("mod_assign_get_grades", urlParameters);
+	public static String core_enrol_get_enrolled_users(int courseId) throws ProtocolException, IOException {
+		String urlParameters = "courseid=" + URLEncoder.encode(Integer.toString(courseId), "UTF-8");
+		String result = restRequest("core_enrol_get_enrolled_users", urlParameters);
+		return result;
+	}
+	
+	/**
+	 * @param userId This is Id of the user you want to have the courses of
+	 * @return Returns courses where the specified user is enrolled in
+	 */
+	public static String core_enrol_get_users_courses(int userId) throws ProtocolException, IOException {
+		String urlParameters = "userid=" + URLEncoder.encode(Integer.toString(userId), "UTF-8");
+		String result = restRequest("core_enrol_get_users_courses", urlParameters);
 		return result;
 	}
 	
 
+	/**
+	 * @param courseId This is Id of the course you want to have grades of
+	 * @return Returns grades for all users, who are enrolled in the specified course 
+	 */
+	public static String gradereport_user_get_grade_items(int courseId) throws ProtocolException, IOException {
+		
+		String urlParameters = "courseid=" + URLEncoder.encode(Integer.toString(courseId), "UTF-8");
+		String result = restRequest("gradereport_user_get_grade_items", urlParameters);
+		return result;
+	}
+	
+	/**
+	 * @param courseId This is Id of the course you want to have grades of
+	 * @param userId This is Id of the user you want to have grades of 
+	 * @return Returns grades for the specified course and user
+	 */
+	public static String gradereport_user_get_grade_items(int courseId, int userId) throws ProtocolException, IOException {
+		
+		String urlParameters = "courseid=" + URLEncoder.encode(Integer.toString(courseId), "UTF-8") + 
+				"&userid=" + URLEncoder.encode(Integer.toString(userId), "UTF-8");
+		String result = restRequest("gradereport_user_get_grade_items", urlParameters);
+		return result;
+	}
+	
 }
