@@ -1,4 +1,4 @@
-package moodleRestClient;
+package i5.las2peer.services.moodleService.moodleConnection;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,27 +10,33 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class MoodleWebServiceConnector {
+public class MoodleWebServiceConnection {
 	private static String token = null;
 	private static String domainName = null;
 	private static String restFormat = "";
+	
+	
+	public MoodleWebServiceConnection() {
+		
+	}
+	
 	
 	/**
 	 * Initiates the moodle web service connections
 	 * @param token The token of your moodle webservice.
 	 * @param domainName The url of your moodle instance.
 	 */
-	public static void init(String token, String domainName) {
-		MoodleWebServiceConnector.token = token;
-		MoodleWebServiceConnector.domainName = domainName;
+	public void init(String token, String domainName) {
+		MoodleWebServiceConnection.token = token;
+		MoodleWebServiceConnection.domainName = "http://" + domainName;
 	}
 	
 	/**
 	 * @param isJson If you want the output in json format than set true.
 	 */
-	public static void init(String token, String domainName, boolean isJson) {
-		MoodleWebServiceConnector.token = token;
-		MoodleWebServiceConnector.domainName = domainName;
+	public void init(String token, String domainName, boolean isJson) {
+		MoodleWebServiceConnection.token = token;
+		MoodleWebServiceConnection.domainName = "http://" + domainName;
 		if (isJson) restFormat = "&moodlewsrestformat=json";
 	}
 	
@@ -41,7 +47,7 @@ public class MoodleWebServiceConnector {
 	 * @param assignmentNumber These are the parameters in one String for the moodle rest request.
 	 * @return Returns the output of the moodle rest request.
 	 */
-	private static String restRequest(String functionName, String urlParameters) throws ProtocolException, IOException{
+	private String restRequest(String functionName, String urlParameters) throws ProtocolException, IOException{
 		// Send request
 		String serverurl = domainName + "/webservice/rest/server.php" + "?wstoken=" + token + "&wsfunction=" + functionName + restFormat;
 		HttpURLConnection con = (HttpURLConnection) new URL(serverurl).openConnection();
@@ -72,7 +78,7 @@ public class MoodleWebServiceConnector {
 	/**
 	 * @return Returns the information to all courses in moodle
 	 */
-	public static String core_course_get_courses() throws ProtocolException, IOException {
+	public String core_course_get_courses() throws ProtocolException, IOException {
 		String result = restRequest("core_course_get_courses", null);
 		return result;
 	}
@@ -81,7 +87,7 @@ public class MoodleWebServiceConnector {
 	 * @param courseId This is Id of the course you want to have enrolled users of
 	 * @return Returns enrolled users for specified course 
 	 */
-	public static String core_enrol_get_enrolled_users(int courseId) throws ProtocolException, IOException {
+	public String core_enrol_get_enrolled_users(int courseId) throws ProtocolException, IOException {
 		String urlParameters = "courseid=" + URLEncoder.encode(Integer.toString(courseId), "UTF-8");
 		String result = restRequest("core_enrol_get_enrolled_users", urlParameters);
 		return result;
@@ -91,7 +97,7 @@ public class MoodleWebServiceConnector {
 	 * @param userId This is Id of the user you want to have the courses of
 	 * @return Returns courses where the specified user is enrolled in
 	 */
-	public static String core_enrol_get_users_courses(int userId) throws ProtocolException, IOException {
+	public String core_enrol_get_users_courses(int userId) throws ProtocolException, IOException {
 		String urlParameters = "userid=" + URLEncoder.encode(Integer.toString(userId), "UTF-8");
 		String result = restRequest("core_enrol_get_users_courses", urlParameters);
 		return result;
@@ -102,7 +108,7 @@ public class MoodleWebServiceConnector {
 	 * @param courseId This is Id of the course you want to have grades of
 	 * @return Returns grades for all users, who are enrolled in the specified course 
 	 */
-	public static String gradereport_user_get_grade_items(int courseId) throws ProtocolException, IOException {
+	public String gradereport_user_get_grade_items(int courseId) throws ProtocolException, IOException {
 		
 		String urlParameters = "courseid=" + URLEncoder.encode(Integer.toString(courseId), "UTF-8");
 		String result = restRequest("gradereport_user_get_grade_items", urlParameters);
@@ -114,7 +120,7 @@ public class MoodleWebServiceConnector {
 	 * @param userId This is Id of the user you want to have grades of 
 	 * @return Returns grades for the specified course and user
 	 */
-	public static String gradereport_user_get_grade_items(int courseId, int userId) throws ProtocolException, IOException {
+	public String gradereport_user_get_grade_items(int courseId, int userId) throws ProtocolException, IOException {
 		
 		String urlParameters = "courseid=" + URLEncoder.encode(Integer.toString(courseId), "UTF-8") + 
 				"&userid=" + URLEncoder.encode(Integer.toString(userId), "UTF-8");

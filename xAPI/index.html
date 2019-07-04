@@ -7,6 +7,9 @@
 
     <!-- "xAPI magic" from github.com/adlnet/xAPIWrapper -->
     <script type="text/javascript" src="xapiwrapper.js"></script>
+
+    <!-- mobsos mysql connect and json parser -->
+    <script type="text/javascript" src="moodledata.js"></script>
       
     <script>  
     function send_statement(){  
@@ -21,7 +24,16 @@
             "auth" : "Basic " + toBase64("6f6b29e72cbe124252cb47a0c011706b7638a960:73f0c24ba43e2484931bcf9606e9638caebac963")
         };  
   
-        ADL.XAPIWrapper.changeConfig(conf);  
+        ADL.XAPIWrapper.changeConfig(conf);
+
+        getEverything(function (err, everythingArr) {
+            if(err) console.log("Error");
+            for(var i = 0; i < everythingArr.length; i++) {
+                var userData = everythingArr[i];
+                //todo
+            }
+
+        });
            
         //define the xapi statement being sent  
         var statement = {  
