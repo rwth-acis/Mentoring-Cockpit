@@ -18,11 +18,11 @@ export SERVICE=${SERVICE_NAME}.${SERVICE_CLASS}@${SERVICE_VERSION}
 [[ -z "${MOODLE_DOMAIN}" ]] && \
     echo "Mandatory variable MOODLE_DOMAIN is not set. Add -e MOODLE_DOMAIN=moodleDomain to your arguments." && exit 1
 [[ -z "${MOODLE_TOKEN}" ]] && \
-    echo "Mandatory variable MYSQL_PASSWORD is not set. Add -e MOODLE_TOKEN=moodleToken to your arguments." && exit 1
+    echo "Mandatory variable MOODLE_TOKEN is not set. Add -e MOODLE_TOKEN=moodleToken to your arguments." && exit 1
 [[ -z "${LRS_DOMAIN}" ]] && \
-    echo "Mandatory variable MYSQL_USER is not set. Add -e LRS_DOMAIN=lrsDomain to your arguments." && exit 1
+    echo "Mandatory variable LRS_DOMAIN is not set. Add -e LRS_DOMAIN=lrsDomain to your arguments." && exit 1
 [[ -z "${LRS_AUTH}" ]] && \
-    echo "Mandatory variable MYSQL_PASSWORD is not set. Add -e LRS_AUTH=lrsAuth to your arguments." && exit 1
+    echo "Mandatory variable LRS_AUTH is not set. Add -e LRS_AUTH=lrsAuth to your arguments." && exit 1
 
 # configure service properties
 function set_in_service_config {
