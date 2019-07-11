@@ -73,8 +73,8 @@ public class MentoringCockpitService extends RESTService {
 	
 	private String moodleDomain;
 	private String moodleToken;
-	private String lrs;
-	private String auth;
+	private String lrsDomain;
+	private String lrsAuth;
 	
 	private MoodleWebServiceConnection moodle;
 	
