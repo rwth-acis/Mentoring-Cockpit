@@ -174,7 +174,8 @@ public class MoodleWebServiceConnection {
 				
 				itemmodule = jsonItem.getString("itemmodule");
 				
-
+				//todo in right format look at SimpleDateFormat
+				//todo think about how to handle null
 				if (jsonItem.get("gradedatesubmitted") != JSONObject.NULL) {
 					Date date = new Date();
 					date.setTime((long)jsonItem.getInt("gradedatesubmitted")*1000);
@@ -214,7 +215,7 @@ public class MoodleWebServiceConnection {
 								+ "\"id\": \"http://" + domainName + "/mod/" + itemmodule + "/view.php?id=" + itemid +"\","
 								+ "\"definition\": {  "
 									+ "\"name\": {\"en-US\": \"" + itemname + "\"},"
-									+ "\"description\": {\"en-US\": \"Moodle course\"}"
+									+ "\"description\": {\"en-US\": \"This is a test\"}"
 								+ "},"
 								+ "\"objectType\": \"Activity\""
 							+ "},"

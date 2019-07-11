@@ -15,26 +15,23 @@ export SERVICE_CLASS=$(awk -F "=" '/service.class/ {print $2}' etc/ant_configura
 export SERVICE=${SERVICE_NAME}.${SERVICE_CLASS}@${SERVICE_VERSION}
 
 # check mandatory variables
-[[ -z "${MYSQL_USER}" ]] && \
-    echo "Mandatory variable MYSQL_USER is not set. Add -e MYSQL_USER=myuser to your arguments." && exit 1
-[[ -z "${MYSQL_PASSWORD}" ]] && \
-    echo "Mandatory variable MYSQL_PASSWORD is not set. Add -e MYSQL_PASSWORD=mypasswd to your arguments." && exit 1
-
-# set defaults for optional service parameters
-[[ -z "${SERVICE_PASSPHRASE}" ]] && export SERVICE_PASSPHRASE='processing'
-[[ -z "${MYSQL_HOST}" ]] && export MYSQL_HOST='mysql'
-[[ -z "${MYSQL_PORT}" ]] && export MYSQL_PORT='3306'
-[[ -z "${HASH_REMARKS}" ]] && export HASH_REMARKS='FALSE'
+[[ -z "${MOODLE_DOMAIN}" ]] && \
+    echo "Mandatory variable MOODLE_DOMAIN is not set. Add -e MOODLE_DOMAIN=moodleDomain to your arguments." && exit 1
+[[ -z "${MOODLE_TOKEN}" ]] && \
+    echo "Mandatory variable MYSQL_PASSWORD is not set. Add -e MOODLE_TOKEN=moodleToken to your arguments." && exit 1
+[[ -z "${LRS_DOMAIN}" ]] && \
+    echo "Mandatory variable MYSQL_USER is not set. Add -e LRS_DOMAIN=lrsDomain to your arguments." && exit 1
+[[ -z "${LRS_AUTH}" ]] && \
+    echo "Mandatory variable MYSQL_PASSWORD is not set. Add -e LRS_AUTH=lrsAuth to your arguments." && exit 1
 
 # configure service properties
-
 function set_in_service_config {
     sed -i "s?${1}[[:blank:]]*=.*?${1}=${2}?g" ${SERVICE_PROPERTY_FILE}
 }
 set_in_service_config moodleDomain ${MOODLE_DOMAIN}
 set_in_service_config moodleToken ${MOODLE_TOKEN}
 set_in_service_config lrsDomain ${LRS_DOMAIN}
-set_in_service_config lrsAuth ${LRS_AUTH}
+set_in_service_config lrsAuth "${LRS_AUTH}"
 
 
 # wait for any bootstrap host to be available
@@ -61,7 +58,7 @@ fi
 # start the service within a las2peer node
 if [[ -z "${@}" ]]
 then
-  exec ${LAUNCH_COMMAND} startService\("'""${SERVICE}""'", "'""${SERVICE_PASSPHRASE}""'"\) startWebConnector
+  exec ${LAUNCH_COMMAND} uploadStartupDirectory startService\("'""${SERVICE}""'", "'""${SERVICE_PASSPHRASE}""'"\) startWebConnector interactive
 else
   exec ${LAUNCH_COMMAND} ${@}
 fi

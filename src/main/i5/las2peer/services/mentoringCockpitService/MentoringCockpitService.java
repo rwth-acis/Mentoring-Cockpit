@@ -150,14 +150,14 @@ public class MentoringCockpitService extends RESTService {
 	public void sendXAPIstatement(ArrayList<String> statements) {
 		for(String statement : statements) {
 			try {
-				URL url = new URL(lrs);
+				URL url = new URL(lrsDomain);
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setDoOutput(true);
 				conn.setDoInput(true);
 				conn.setRequestMethod("POST");
 				conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 				conn.setRequestProperty("X-Experience-API-Version","1.0.3");
-				conn.setRequestProperty("Authorization", auth);
+				conn.setRequestProperty("Authorization", lrsAuth);
 				conn.setRequestProperty("Cache-Control", "no-cache");
 				conn.setUseCaches(false);
 				
