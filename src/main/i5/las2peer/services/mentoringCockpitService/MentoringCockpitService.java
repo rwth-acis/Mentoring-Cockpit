@@ -104,9 +104,7 @@ public class MentoringCockpitService extends RESTService {
 		String userinfo = "";
 		try {
 			gradereport = moodle.gradereport_user_get_grade_items(courseId);
-			System.out.println(gradereport);
 			userinfo = moodle.core_enrol_get_enrolled_users(courseId);
-			System.out.println(gradereport);
 		} catch (IOException e) {
 			e.printStackTrace();
 			//return Response.status(Status.NOT_FOUND).build();
@@ -139,7 +137,7 @@ public class MentoringCockpitService extends RESTService {
 		return Response.ok().entity("Moodle data was retrieved").build();
 	}
 	
-	/*
+	
 	@POST
 	@Path("/stop-moodle")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -148,10 +146,11 @@ public class MentoringCockpitService extends RESTService {
 					code = HttpURLConnection.HTTP_OK,
 					message = "Moodle Connection is stopped") })
 	public Response stopMoodleConnection() {
-		isMoodleConnected = false;
+		Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, "Hallo das ist ein Test");
+		//isMoodleConnected = false;
 		return Response.ok().entity("Moodle Connection stopped").build();
 	}
-	*/
+	
 	
 	public void sendXAPIstatement(ArrayList<String> statements) {
 		for(String statement : statements) {
