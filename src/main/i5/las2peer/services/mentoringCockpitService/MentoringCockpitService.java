@@ -65,7 +65,7 @@ import io.swagger.annotations.SwaggerDefinition;
 
 
 @ManualDeployment
-@ServicePath("moodle")
+@ServicePath("mc")
 // TODO Your own service class
 public class MentoringCockpitService extends RESTService {
 	
@@ -86,7 +86,7 @@ public class MentoringCockpitService extends RESTService {
 	
 	
 	@POST
-	@Path("/start-moodle/{courseId}")
+	@Path("/moodle-data/{courseId}")
 	@Produces(MediaType.TEXT_PLAIN)
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -94,13 +94,12 @@ public class MentoringCockpitService extends RESTService {
 					message = "Moodle Connection is initiaded") })
 	public Response initMoodleConnection(@PathParam("courseId") int courseId) throws ProtocolException, IOException{		
 		isMoodleConnected = true;
-		
-		System.out.println("Vor execute");
-		Context.get().getExecutor().execute(() -> {
-			System.out.println("Im execute");
+		//System.out.println("Vor execute")
+		//Context.get().getExecutor().execute(() -> {
+			//System.out.println("Im execute");
 			ArrayList<String> oldstatements = new ArrayList<String>();
 			
-			while(isMoodleConnected) {
+			//while(isMoodleConnected) {
 				String gradereport = "";
 				String userinfo = "";
 				try {
@@ -126,17 +125,19 @@ public class MentoringCockpitService extends RESTService {
 					
 				}
 				oldstatements=newstatements;
-				
+				/*
 				try {
 					Thread.sleep(30*1000);
 				} catch (Exception e) {
 					
 				}
-			}
-		});
+				*/
+			//}
+		//});
 		return Response.ok().entity("Moodle Connection initiaded").build();
 	}
 	
+	/*
 	@POST
 	@Path("/stop-moodle")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -148,6 +149,7 @@ public class MentoringCockpitService extends RESTService {
 		isMoodleConnected = false;
 		return Response.ok().entity("Moodle Connection stopped").build();
 	}
+	*/
 	
 	public void sendXAPIstatement(ArrayList<String> statements) {
 		for(String statement : statements) {
