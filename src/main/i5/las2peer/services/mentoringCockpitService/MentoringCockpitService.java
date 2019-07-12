@@ -95,7 +95,9 @@ public class MentoringCockpitService extends RESTService {
 	public Response initMoodleConnection(@PathParam("courseId") int courseId) throws ProtocolException, IOException{		
 		isMoodleConnected = true;
 		
+		System.out.println("Vor execute");
 		Context.get().getExecutor().execute(() -> {
+			System.out.println("Im execute");
 			ArrayList<String> oldstatements = new ArrayList<String>();
 			
 			while(isMoodleConnected) {
