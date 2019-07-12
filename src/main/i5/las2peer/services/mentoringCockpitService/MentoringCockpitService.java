@@ -104,7 +104,9 @@ public class MentoringCockpitService extends RESTService {
 		String userinfo = "";
 		try {
 			gradereport = moodle.gradereport_user_get_grade_items(courseId);
+			System.out.println(gradereport);
 			userinfo = moodle.core_enrol_get_enrolled_users(courseId);
+			System.out.println(gradereport);
 		} catch (IOException e) {
 			e.printStackTrace();
 			//return Response.status(Status.NOT_FOUND).build();
