@@ -58,7 +58,7 @@ fi
 # start the service within a las2peer node
 if [[ -z "${@}" ]]
 then
-  exec ${LAUNCH_COMMAND} startService\("'""${SERVICE}""'", "'""${SERVICE_PASSPHRASE}""'"\) startWebConnector
+  exec ${LAUNCH_COMMAND} startService\("'""${SERVICE}""'"\) startWebConnector
 else
   exec ${LAUNCH_COMMAND} ${@}
 fi
