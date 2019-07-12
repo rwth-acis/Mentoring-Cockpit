@@ -69,7 +69,7 @@ import io.swagger.annotations.SwaggerDefinition;
 // TODO Your own service class
 public class MentoringCockpitService extends RESTService {
 	
-	private static volatile boolean isMoodleConnected = true;
+	//private static volatile boolean isMoodleConnected = true;
 	
 	private String moodleDomain;
 	private String moodleToken;
@@ -91,40 +91,40 @@ public class MentoringCockpitService extends RESTService {
 	@ApiResponses(
 			value = { @ApiResponse(
 					code = HttpURLConnection.HTTP_OK,
-					message = "Moodle Connection is initiaded") })
+					message = "Moodle Connection is ok") })
 	public Response initMoodleConnection(@PathParam("courseId") int courseId) throws ProtocolException, IOException{		
-		isMoodleConnected = true;
+		//isMoodleConnected = true;
 		//System.out.println("Vor execute")
 		//Context.get().getExecutor().execute(() -> {
 			//System.out.println("Im execute");
-			ArrayList<String> oldstatements = new ArrayList<String>();
+		ArrayList<String> oldstatements = new ArrayList<String>();
 			
 			//while(isMoodleConnected) {
-				String gradereport = "";
-				String userinfo = "";
-				try {
-					gradereport = moodle.gradereport_user_get_grade_items(courseId);
-					userinfo = moodle.core_enrol_get_enrolled_users(courseId);
-				} catch (IOException e) {
-					e.printStackTrace();
-					//return Response.status(Status.NOT_FOUND).build();
-				}
-				
-				ArrayList<String> newstatements = new ArrayList<String>();
-				try {
-					newstatements = moodle.statementGenerator(gradereport, userinfo);
-				} catch (JSONException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				for(int i = 0; i < newstatements.size(); i++) {
-					String statement = newstatements.get(i);
-					if(!oldstatements.contains(statement))
-						Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, statement);
-					
-				}
-				oldstatements=newstatements;
+		String gradereport = "";
+		String userinfo = "";
+		try {
+			gradereport = moodle.gradereport_user_get_grade_items(courseId);
+			userinfo = moodle.core_enrol_get_enrolled_users(courseId);
+		} catch (IOException e) {
+			e.printStackTrace();
+			//return Response.status(Status.NOT_FOUND).build();
+		}
+		
+		ArrayList<String> newstatements = new ArrayList<String>();
+		try {
+			newstatements = moodle.statementGenerator(gradereport, userinfo);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		for(int i = 0; i < newstatements.size(); i++) {
+			String statement = newstatements.get(i);
+			if(!oldstatements.contains(statement))
+				Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, statement);
+			
+		}
+		oldstatements=newstatements;
 				/*
 				try {
 					Thread.sleep(30*1000);
@@ -134,7 +134,7 @@ public class MentoringCockpitService extends RESTService {
 				*/
 			//}
 		//});
-		return Response.ok().entity("Moodle Connection initiaded").build();
+		return Response.ok().entity("Moodle data was retrieved").build();
 	}
 	
 	/*
