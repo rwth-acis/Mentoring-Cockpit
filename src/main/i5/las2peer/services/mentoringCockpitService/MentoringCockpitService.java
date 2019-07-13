@@ -125,11 +125,12 @@ public class MentoringCockpitService extends RESTService {
 		
 		for(int i = 0; i < newstatements.size(); i++) {
 			String statement = newstatements.get(i);
-			if(!oldstatements.contains(statement))
-				Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, statement);
-				oldstatements.add(statement);
-				if(!returnMessage.equals(NEW_DATA_MESSAGE))
-					returnMessage = NEW_DATA_MESSAGE;
+			
+			//if(!oldstatements.contains(statement))
+			Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, statement);
+				//oldstatements.add(statement);
+			if(!returnMessage.equals(NEW_DATA_MESSAGE))
+				returnMessage = NEW_DATA_MESSAGE;
 			
 		}
 		//oldstatements=newstatements;
@@ -162,35 +163,40 @@ public class MentoringCockpitService extends RESTService {
 	
 	public void sendXAPIstatement(ArrayList<String> statements) {
 		for(String statement : statements) {
-			try {
-				URL url = new URL(lrsDomain);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setDoOutput(true);
-				conn.setDoInput(true);
-				conn.setRequestMethod("POST");
-				conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-				conn.setRequestProperty("X-Experience-API-Version","1.0.3");
-				conn.setRequestProperty("Authorization", lrsAuth);
-				conn.setRequestProperty("Cache-Control", "no-cache");
-				conn.setUseCaches(false);
-				
-				OutputStream os = conn.getOutputStream();
-				os.write(statement.getBytes("UTF-8"));
-				os.flush();
-				
-				Reader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-				
-				//maybe for frontend needed maybe not
-				for (int c; (c = reader.read()) >= 0;)
-					System.out.print((char)c);
+			if(!oldstatements.contains(statement)) {
+				oldstatements.add(statement);
+
+				try {
+					URL url = new URL(lrsDomain);
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					conn.setDoOutput(true);
+					conn.setDoInput(true);
+					conn.setRequestMethod("POST");
+					conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+					conn.setRequestProperty("X-Experience-API-Version","1.0.3");
+					conn.setRequestProperty("Authorization", lrsAuth);
+					conn.setRequestProperty("Cache-Control", "no-cache");
+					conn.setUseCaches(false);
 					
-				
-				conn.disconnect();
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+					OutputStream os = conn.getOutputStream();
+					os.write(statement.getBytes("UTF-8"));
+					os.flush();
+					
+					Reader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+					
+					//maybe for frontend needed maybe not
+					for (int c; (c = reader.read()) >= 0;)
+						System.out.print((char)c);
+						
+					
+					conn.disconnect();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+
 		}
 	}
 }
