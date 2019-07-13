@@ -129,20 +129,20 @@ public class MoodleWebServiceConnection {
 		JSONArray jsonUserGrades = (JSONArray) jsonGradeReport.get("usergrades");
 		JSONArray jsonUserInfo = new JSONArray(userinfo);
 		
-		//the relevant data for the xapi statement
-		String courseid;
-		String userfullname;
-		String userid;
-		String email = null;
-		String itemname;
-		String itemid;
-		String itemmodule;
-		String gradedatesubmitted = null;
-		String percentageformatted = null;
-		String feedback = null;
-		
 		//for all Grades
 		for (int i = 0; i < jsonUserGrades.length(); i++) {
+
+			//the relevant data for the xapi statement
+			String courseid;
+			String userfullname;
+			String userid;
+			String email = null;
+			String itemname;
+			String itemid;
+			String itemmodule;
+			String gradedatesubmitted = null;
+			String percentageformatted = null;
+			String feedback = null;
 		
 			JSONObject jsonUser = (JSONObject) jsonUserGrades.get(i);
 			
