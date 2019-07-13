@@ -79,9 +79,6 @@ public class MentoringCockpitService extends RESTService {
 	private MoodleWebServiceConnection moodle;
 
 	private static ArrayList<String> oldstatements = new ArrayList<String>();
-
-	private static final String NEW_DATA_MESSAGE = "New moodle data was sent to MobSOS.";
-	private static final String NO_NEW_DATA_MESSAGE = "No new moodle data was found.";
 	
 	
 	public MentoringCockpitService() {
@@ -98,7 +95,6 @@ public class MentoringCockpitService extends RESTService {
 					code = HttpURLConnection.HTTP_OK,
 					message = "Moodle connection is initiaded") })
 	public Response initMoodleConnection(@PathParam("courseId") int courseId) throws ProtocolException, IOException{
-		String returnMessage = NO_NEW_DATA_MESSAGE;
 		//isMoodleConnected = true;
 		//System.out.println("Vor execute")
 		//Context.get().getExecutor().execute(() -> {
@@ -129,8 +125,6 @@ public class MentoringCockpitService extends RESTService {
 			//if(!oldstatements.contains(statement))
 			Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, statement);
 				//oldstatements.add(statement);
-			if(!returnMessage.equals(NEW_DATA_MESSAGE))
-				returnMessage = NEW_DATA_MESSAGE;
 			
 		}
 		//oldstatements=newstatements;
@@ -143,7 +137,7 @@ public class MentoringCockpitService extends RESTService {
 				*/
 			//}
 		//});
-		return Response.ok().entity(returnMessage).build();
+		return Response.ok().entity("Moodle data was sent to MobSOS.").build();
 	}
 	
 	
