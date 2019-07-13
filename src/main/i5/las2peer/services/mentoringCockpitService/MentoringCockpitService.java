@@ -127,11 +127,12 @@ public class MentoringCockpitService extends RESTService {
 			String statement = newstatements.get(i);
 			if(!oldstatements.contains(statement))
 				Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, statement);
+				oldstatements.add(statement);
 				if(!returnMessage.equals(NEW_DATA_MESSAGE))
 					returnMessage = NEW_DATA_MESSAGE;
 			
 		}
-		oldstatements=newstatements;
+		//oldstatements=newstatements;
 				/*
 				try {
 					Thread.sleep(30*1000);
