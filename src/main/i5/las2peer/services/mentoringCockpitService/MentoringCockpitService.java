@@ -77,6 +77,11 @@ public class MentoringCockpitService extends RESTService {
 	private String lrsAuth;
 	
 	private MoodleWebServiceConnection moodle;
+
+	private ArrayList<String> oldstatements = new ArrayList<String>();
+
+	private static final String NEW_DATA_MESSAGE = "New moodle data was sent to MobSOS.";
+	private static final String NO_NEW_DATA_MESSAGE = "No new moodle data was found.";
 	
 	
 	public MentoringCockpitService() {
@@ -91,13 +96,13 @@ public class MentoringCockpitService extends RESTService {
 	@ApiResponses(
 			value = { @ApiResponse(
 					code = HttpURLConnection.HTTP_OK,
-					message = "Moodle data was send to MobSOS") })
-	public Response initMoodleConnection(@PathParam("courseId") int courseId) throws ProtocolException, IOException{		
+					message = "Moodle connection is initiaded") })
+	public Response initMoodleConnection(@PathParam("courseId") int courseId) throws ProtocolException, IOException{
+		String returnMessage = NO_NEW_DATA_MESSAGE;
 		//isMoodleConnected = true;
 		//System.out.println("Vor execute")
 		//Context.get().getExecutor().execute(() -> {
 			//System.out.println("Im execute");
-		ArrayList<String> oldstatements = new ArrayList<String>();
 			
 			//while(isMoodleConnected) {
 		String gradereport = "";
@@ -122,6 +127,8 @@ public class MentoringCockpitService extends RESTService {
 			String statement = newstatements.get(i);
 			if(!oldstatements.contains(statement))
 				Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, statement);
+				if(!returnMessage.equals(NEW_DATA_MESSAGE))
+					returnMessage = NEW_DATA_MESSAGE;
 			
 		}
 		oldstatements=newstatements;
@@ -134,7 +141,7 @@ public class MentoringCockpitService extends RESTService {
 				*/
 			//}
 		//});
-		return Response.ok().entity("Moodle data was send to MobSOS.").build();
+		return Response.ok().entity(returnMessage).build();
 	}
 	
 	
@@ -144,11 +151,11 @@ public class MentoringCockpitService extends RESTService {
 	@ApiResponses(
 			value = { @ApiResponse(
 					code = HttpURLConnection.HTTP_OK,
-					message = "Moodle Connection is stopped") })
+					message = "Moodle connection is stopped") })
 	public Response stopMoodleConnection() {
 		Context.get().monitorEvent(MonitoringEvent.SERVICE_CUSTOM_MESSAGE_2, "Hallo das ist ein Test");
 		//isMoodleConnected = false;
-		return Response.ok().entity("Moodle Connection stopped").build();
+		return Response.ok().entity("Test").build();
 	}
 	
 	
