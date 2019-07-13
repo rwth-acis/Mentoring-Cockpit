@@ -78,7 +78,7 @@ public class MentoringCockpitService extends RESTService {
 	
 	private MoodleWebServiceConnection moodle;
 
-	private ArrayList<String> oldstatements = new ArrayList<String>();
+	private static ArrayList<String> oldstatements = new ArrayList<String>();
 
 	private static final String NEW_DATA_MESSAGE = "New moodle data was sent to MobSOS.";
 	private static final String NO_NEW_DATA_MESSAGE = "No new moodle data was found.";
