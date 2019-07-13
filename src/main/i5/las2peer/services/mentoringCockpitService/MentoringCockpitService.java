@@ -91,7 +91,7 @@ public class MentoringCockpitService extends RESTService {
 	@ApiResponses(
 			value = { @ApiResponse(
 					code = HttpURLConnection.HTTP_OK,
-					message = "Moodle Connection is ok") })
+					message = "Moodle data was send to MobSOS") })
 	public Response initMoodleConnection(@PathParam("courseId") int courseId) throws ProtocolException, IOException{		
 		//isMoodleConnected = true;
 		//System.out.println("Vor execute")
@@ -134,7 +134,7 @@ public class MentoringCockpitService extends RESTService {
 				*/
 			//}
 		//});
-		return Response.ok().entity("Moodle data was retrieved").build();
+		return Response.ok().entity("Moodle data was send to MobSOS.").build();
 	}
 	
 	
