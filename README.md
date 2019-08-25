@@ -7,3 +7,4 @@ It has the purpose to give an overview on all repositories needed in the scope o
 * [MobSOS Data Processing](https://github.com/rwth-acis/mobsos-data-processing/tree/bachelor-thesis-philipp-roytburg)
 * [Mentoring Cockpit Service](https://github.com/rwth-acis/mentoring-cockpit-service)
 * [Mentoring Cockpit PWA](https://github.com/rwth-acis/mentoring-cockpit-pwa)
+* [Sensor Data Service](https://github.com/rwth-acis/sensor-data-service)
